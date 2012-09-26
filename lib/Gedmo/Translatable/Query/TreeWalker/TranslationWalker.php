@@ -299,8 +299,11 @@ class TranslationWalker extends SqlWalker
                     $sql .= ' AND '.$tblAlias.'.'.$transMeta->getSingleAssociationJoinColumnName('object')
                         .' = '.$compTblAlias.'.'.$idColName;
                 } else {
+	                $fieldReflectionProperties = $meta->getReflectionProperties();
+	                $fieldReflectionProperty = $fieldReflectionProperties[$field];
+	                
                     $sql .= ' AND '.$tblAlias.'.'.$transMeta->getQuotedColumnName('objectClass', $this->platform)
-                        .' = '.$this->conn->quote($meta->name);
+                        .' = '.$this->conn->quote($fieldReflectionProperty->class);
                     $sql .= ' AND '.$tblAlias.'.'.$transMeta->getQuotedColumnName('foreignKey', $this->platform)
                         .' = '.$compTblAlias.'.'.$idColName;
                 }
